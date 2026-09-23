@@ -31,7 +31,7 @@ gui_autoexecute:
 
     ; Initialize search_urls as a variable set to zero
     search_urls := 0
-    return
+return
 
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI
@@ -55,7 +55,7 @@ gui_spawn:
     Gui, Font, s10, Segoe UI
     Gui, Add, Edit, %gui_control_options% vPedersen gFindus
     Gui, Show,, myGUI
-    return
+return
 
 ;-------------------------------------------------------------------------------
 ; GUI FUNCTIONS AND SUBROUTINES
@@ -63,13 +63,13 @@ gui_spawn:
 ; Automatically triggered on Escape key:
 GuiEscape:
     gui_destroy()
-    return
+return
 
 ; The callback function when the text changes in the input field.
 Findus:
     Gui, Submit, NoHide
     #Include %A_ScriptDir%\GUI\UserCommands.ahk
-    return
+return
 
 ;
 ; gui_destroy: Destroy the GUI after use.
@@ -120,7 +120,7 @@ gui_search_add_elements:
     Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
     GuiControl, Disable, Pedersen
     Gui, Show, AutoSize
-    return
+return
 
 gui_search(url) {
     global
@@ -149,7 +149,7 @@ gui_SearchEnter:
         run %search_final_url%
     }
     search_urls := 0
-    return
+return
 
 ;-------------------------------------------------------------------------------
 ; TOOLTIP
@@ -159,7 +159,7 @@ gui_SearchEnter:
 ;-------------------------------------------------------------------------------
 gui_tooltip_clear:
     ToolTip
-    return
+return
 
 gui_commandlibrary:
     ; hidden GUI used to pass font options to tooltip:
@@ -208,5 +208,24 @@ gui_commandlibrary:
         tooltiptextpadded .= "`n"
     }
     Sort, tooltiptextpadded
-    ToolTip %tooltiptextpadded%, 3, 3, 1
-    return
+
+    ; Calculate center position of the screen
+    max_line_len := 0
+    total_lines := 0
+    Loop, Parse, tooltiptextpadded, `n
+    {
+        if (StrLen(A_LoopField) > max_line_len)
+            max_line_len := StrLen(A_LoopField)
+        if (A_LoopField != "")
+            total_lines++
+    }
+
+    ; Estimate width and height based on font size 10 (Lucida Console ~8px/char, ~18px/line)
+    tt_width := max_line_len * 8 + 10
+    tt_height := total_lines * 18 + 10
+
+    centerX := (A_ScreenWidth - tt_width) / 2
+    centerY := (A_ScreenHeight - tt_height) / 3 * 2
+
+    ToolTip %tooltiptextpadded%, %centerX%, %centerY%, 1
+return

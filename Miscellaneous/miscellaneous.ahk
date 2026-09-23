@@ -1,4 +1,5 @@
-﻿; Allow normal CapsLock functionality to be toggled by Alt+CapsLock:
+﻿
+; Allow normal CapsLock functionality to be toggled by Shift+CapsLock:
 !CapsLock::
     GetKeyState, capsstate, CapsLock, T ;(T indicates a Toggle. capsstate is an arbitrary varible name)
     if capsstate = U
@@ -6,7 +7,15 @@
     else
         SetCapsLockState, AlwaysOff
     return
-
+CapsLock::Enter
+; Capslock & w::Send {Blind}{Up}
+; Capslock & s::Send {Blind}{Down}
+Capslock & w::Up
+Capslock & s::Down
+CapsLock & a::Left
+CapsLock & d::Right
+Capslock & q::PgUp
+Capslock & e::PgDn
 
 ; A function to escape characters like & for use in URLs.
 uriEncode(str) {
