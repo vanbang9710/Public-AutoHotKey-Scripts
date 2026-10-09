@@ -10,12 +10,14 @@
 CapsLock::Enter
 ; Capslock & w::Send {Blind}{Up}
 ; Capslock & s::Send {Blind}{Down}
-Capslock & w::Up
+Capslock & sc011::Up ; caps+w
 Capslock & s::Down
 CapsLock & a::Left
 CapsLock & d::Right
 Capslock & q::PgUp
 Capslock & e::PgDn
+Capslock & `::XButton1
+Capslock & 1::XButton2
 
 ; A function to escape characters like & for use in URLs.
 uriEncode(str) {
