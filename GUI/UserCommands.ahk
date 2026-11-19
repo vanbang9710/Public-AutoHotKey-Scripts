@@ -31,10 +31,10 @@ else if Pedersen = m%A_Space% ; Open more than one URL
 ;     gui_search_title = Google Search as Incognito
 ;     gui_search("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://www.google.com/search?safe=off&q=REPLACEME")
 ; }
-else if Pedersen = y%A_Space% ; Search Youtube
+else if Pedersen = hib%A_Space% ; Schedule one-time Hibernate
 {
-    gui_search_title = Search Youtube
-    gui_search("https://www.youtube.com/results?search_query=REPLACEME")
+    gui_search_title = Hibernate after
+    gui_search("powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ""$action = New-ScheduledTaskAction -Execute 'shutdown.exe' -Argument '/h'; $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(REPLACEME); Invoke-Gsudo { Register-ScheduledTask -TaskName 'OneTime Hibernate' -Action $using:action -Trigger $using:trigger -RunLevel Highest -Force }""")
 }
 
 
